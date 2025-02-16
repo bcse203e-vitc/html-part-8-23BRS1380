@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show/Hide Password</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+      }
+      .form-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      label {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      input[type="password"],
+      input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: 0.3s;
+      }
+      input:focus {
+        border-color: #007bff;
+      }
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Show/Hide Password</h2>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
+      </div>
+      <div class="toggle-container">
+        <input type="checkbox" id="togglePassword" onclick="togglePassword()" />
+        <label for="togglePassword">Show Password</label>
+      </div>
+    </div>
+
+    <script>
+      function togglePassword() {
+        let passwordInput = document.getElementById("password");
+        let toggle = document.getElementById("togglePassword");
+
+        if (toggle.checked) {
+          passwordInput.type = "text";
+        } else {
+          passwordInput.type = "password";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,44 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Font Size Adjuster</title>
     <style>
-        body {
-            width: 800px;
-
-            margin: 200px auto;
-        }
-        
-        p {
-            font-size: 22px ;
-           margin-bottom: 100px;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        background-color: #f4f4f4;
+      }
+      p {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        margin: 5px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <p id="text">This is a text</p>
     <button class="increase">Increase</button>
-    <button class="decrease">decrease</button>
+    <button class="decrease">Decrease</button>
+
     <script>
+      function increase() {
+        let textElement = document.getElementById("text");
+        let currentSize = parseInt(
+          window.getComputedStyle(textElement).fontSize
+        );
+        textElement.style.fontSize = currentSize + 2 + "px";
+      }
 
+      function decrease() {
+        let textElement = document.getElementById("text");
+        let currentSize = parseInt(
+          window.getComputedStyle(textElement).fontSize
+        );
 
-        function increase(){
-            let currentSize = parseInt(window.getComputedStyle(document.getElementById("text")).fontSize);
-            document.getElementById("text").style.fontSize = (currentSize +1) + "px";
+        if (currentSize > 10) {
+          textElement.style.fontSize = currentSize - 2 + "px";
         }
-        function decrease(){
-            let currentSize = parseInt(window.getComputedStyle(document.getElementById("text")).fontSize);
-            if(currentSize == 0){
-                return;
-            }
-            document.getElementById("text").style.fontSize = (currentSize -1) + "px";
-        }
+      }
 
-
-        document.querySelector(".increase").addEventListener("click" , increase);
-        document.querySelector(".decrease").addEventListener("click" , decrease);
+      document.querySelector(".increase").addEventListener("click", increase);
+      document.querySelector(".decrease").addEventListener("click", decrease);
     </script>
-</body>
+  </body>
 </html>

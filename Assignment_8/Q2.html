@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Form Validation</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+        position: relative;
+      }
+      label {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: 0.3s;
+      }
+      input:focus {
+        border-color: #007bff;
+      }
+      .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: none;
+      }
+      .valid {
+        border-color: green;
+      }
+      .invalid {
+        border-color: red;
+      }
+      .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: 0.3s;
+      }
+      .submit-btn:disabled {
+        background-color: gray;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" oninput="validateName()" />
+          <p class="error" id="nameError">Name must not be empty.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" oninput="validateEmail()" />
+          <p class="error" id="emailError">Enter a valid email address.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" oninput="validatePassword()" />
+          <p class="error" id="passwordError">
+            Password must be at least 8 characters long, contain 1 uppercase
+            letter, and 1 number.
+          </p>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>
+          Sign Up
+        </button>
+      </form>
+    </div>
+
+    <script>
+      function validateName() {
+        let name = document.getElementById("name");
+        let error = document.getElementById("nameError");
+
+        if (name.value.trim() === "") {
+          name.classList.add("invalid");
+          name.classList.remove("valid");
+          error.style.display = "block";
+          return false;
+        } else {
+          name.classList.add("valid");
+          name.classList.remove("invalid");
+          error.style.display = "none";
+          return true;
+        }
+      }
+
+      function validateEmail() {
+        let email = document.getElementById("email");
+        let error = document.getElementById("emailError");
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email.value.trim())) {
+          email.classList.add("invalid");
+          email.classList.remove("valid");
+          error.style.display = "block";
+          return false;
+        } else {
+          email.classList.add("valid");
+          email.classList.remove("invalid");
+          error.style.display = "none";
+          return true;
+        }
+      }
+
+      function validatePassword() {
+        let password = document.getElementById("password");
+        let error = document.getElementById("passwordError");
+        let passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        if (!passwordPattern.test(password.value)) {
+          password.classList.add("invalid");
+          password.classList.remove("valid");
+          error.style.display = "block";
+          return false;
+        } else {
+          password.classList.add("valid");
+          password.classList.remove("invalid");
+          error.style.display = "none";
+          return true;
+        }
+      }
+
+      function enableSubmit() {
+        let submitBtn = document.getElementById("submitBtn");
+        if (validateName() && validateEmail() && validatePassword()) {
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+        }
+      }
+
+      document.getElementById("name").addEventListener("input", enableSubmit);
+      document.getElementById("email").addEventListener("input", enableSubmit);
+      document
+        .getElementById("password")
+        .addEventListener("input", enableSubmit);
+
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          alert("Form submitted successfully!");
+        });
+    </script>
+  </body>
+</html>

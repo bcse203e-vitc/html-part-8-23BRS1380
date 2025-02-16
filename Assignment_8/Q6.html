@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Digital Clock</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+        color: #333;
+        flex-direction: column;
+        text-align: center;
+      }
+      .clock {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 8px 12px;
+        border: none;
+        background: #007bff;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock" id="clock">00:00:00</div>
+    <button onclick="toggleFormat()">Switch to 12-hour</button>
+
+    <script>
+      let is24Hour = true;
+
+      function updateClock() {
+        let now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        let ampm = "";
+
+        if (!is24Hour) {
+          ampm = hours >= 12 ? " PM" : " AM";
+          hours = hours % 12 || 12; // Convert to 12-hour format
+        }
+
+        document.getElementById("clock").innerText = `${String(hours).padStart(
+          2,
+          "0"
+        )}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+          2,
+          "0"
+        )}${ampm}`;
+      }
+
+      function toggleFormat() {
+        is24Hour = !is24Hour;
+        document.querySelector("button").innerText = is24Hour
+          ? "Switch to 12-hour"
+          : "Switch to 24-hour";
+        updateClock();
+      }
+
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>

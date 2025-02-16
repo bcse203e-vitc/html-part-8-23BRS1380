@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Carousel</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+      }
+      .carousel-container {
+        position: relative;
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      .carousel {
+        display: flex;
+        width: 100%;
+        height: 400px;
+        transition: transform 0.5s ease-in-out;
+      }
+      .carousel img {
+        width: 500px;
+        height: 100%;
+      }
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 5px;
+      }
+      .prev {
+        left: 10px;
+      }
+      .next {
+        right: 10px;
+      }
+      .prev:hover,
+      .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel-container" id="carousel-container">
+      <div class="carousel" id="carousel">
+        <img src="1.jpg" alt="Image 1" />
+        <img src="2.jpg" alt="Image 2" />
+        <img src="3.jpg" alt="Image 3" />
+        <img src="4.jpg" alt="Image 4" />
+      </div>
+      <button class="prev" onclick="prevSlide()">&#10094;</button>
+      <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <script>
+      let currentIndex = 0;
+      let images = document.querySelectorAll(".carousel img");
+      let totalImages = images.length;
+      let carousel = document.getElementById("carousel");
+      let interval;
+
+      function updateSlide() {
+        carousel.style.transform = `translateX(${-currentIndex * 100}%)`;
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateSlide();
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        updateSlide();
+      }
+
+      function startAutoSlide() {
+        interval = setInterval(nextSlide, 3000);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(interval);
+      }
+
+      startAutoSlide();
+
+      document
+        .getElementById("carousel-container")
+        .addEventListener("mouseenter", stopAutoSlide);
+      document
+        .getElementById("carousel-container")
+        .addEventListener("mouseleave", startAutoSlide);
+    </script>
+  </body>
+</html>

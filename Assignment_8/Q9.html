@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Timer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+        background-color: #f4f4f4;
+      }
+      input {
+        padding: 8px;
+        font-size: 18px;
+        width: 100px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none;
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .timer {
+        font-size: 40px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Countdown Timer</h2>
+    <input type="number" id="timeInput" placeholder="Seconds" />
+    <button onclick="startCountdown()">Start</button>
+    <div class="timer" id="countdown">00:00</div>
+
+    <audio
+      id="alarmSound"
+      src="https://www.fesliyanstudios.com/play-mp3/4380"
+    ></audio>
+
+    <script>
+      let countdownInterval;
+
+      function startCountdown() {
+        let time = document.getElementById("timeInput").value;
+        let countdownDisplay = document.getElementById("countdown");
+        let alarm = document.getElementById("alarmSound");
+
+        if (time <= 0 || isNaN(time)) {
+          alert("Please enter a valid number!");
+          return;
+        }
+
+        clearInterval(countdownInterval);
+        countdownDisplay.textContent = formatTime(time);
+
+        countdownInterval = setInterval(() => {
+          time--;
+          countdownDisplay.textContent = formatTime(time);
+
+          if (time <= 0) {
+            clearInterval(countdownInterval);
+            countdownDisplay.textContent = "Time's Up! ⏰";
+            alarm.play();
+          }
+        }, 1000);
+      }
+
+      function formatTime(seconds) {
+        let mins = Math.floor(seconds / 60);
+        let secs = seconds % 60;
+        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(
+          2,
+          "0"
+        )}`;
+      }
+    </script>
+  </body>
+</html>
